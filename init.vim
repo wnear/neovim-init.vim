@@ -59,6 +59,7 @@ if executable('ag')
 endif
 set updatetime=100
 set cursorline
+let g:gitgutter_preview_win_floating=0
 
 " Entertainment
 "Plug 'ryanss/vim-hackernews'
