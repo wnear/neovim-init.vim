@@ -54,12 +54,14 @@ Plug 'dkarter/bullets.vim'
 Plug 'jceb/vim-orgmode'
 Plug 'airblade/vim-gitgutter'
 Plug 'mileszs/ack.vim'
+Plug 'jsfaint/gen_tags.vim'
 if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 set updatetime=100
 set cursorline
 let g:gitgutter_preview_win_floating=0
+let g:gen_tags#gtags_default_map = 1
 
 " Entertainment
 "Plug 'ryanss/vim-hackernews'
@@ -102,6 +104,8 @@ set title
 let NERDTreeShowHidden=0
 let g:NERDTreeDirArrowExpandable = '↠'
 let g:NERDTreeDirArrowCollapsible = '↡'
+let g:NERDTreeIgnore=['\.lib$', '\.vcxproj', '\.sln$', '.git[[dir]]', '.svn[[dir]]', '\.zip$', '\.NCB$', '\.APS$' , ]
+
 
 " Airline
 let g:airline_powerline_fonts = 1
