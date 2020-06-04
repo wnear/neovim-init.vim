@@ -31,8 +31,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
-Plug 'Shougo/neoinclude.vim'
-Plug 'Shougo/deoplete-clangx'
 Plug 'ervandew/supertab'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
@@ -53,6 +51,8 @@ Plug 'dkarter/bullets.vim'
 " user
 Plug 'jceb/vim-orgmode'
 Plug 'airblade/vim-gitgutter'
+Plug 'Shougo/neoinclude.vim'
+Plug 'Shougo/deoplete-clangx'
 Plug 'mileszs/ack.vim'
 Plug 'jsfaint/gen_tags.vim'
 if executable('ag')
@@ -66,6 +66,9 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-
 nmap <C-n> :cnext<CR>
 
 nmap <C-p> :cprev<CR>
+
+" User
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " Entertainment
 "Plug 'ryanss/vim-hackernews'
