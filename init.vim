@@ -234,10 +234,20 @@ function! ColorZazen()
     IndentLinesEnable
 endfunction
 
+"--------------------------------------------------------------------------- 
+" Tip #382: Search for <cword> and replace with input() in all open buffers 
+"--------------------------------------------------------------------------- 
+fun! Replace() 
+    let s:word = input("Replace " . expand('<cword>') . " with:") 
+    :exe 'bufdo! %s/\<' . expand('<cword>') . '\>/' . s:word . '/ge' 
+    :unlet! s:word 
+endfun 
+
 """ Custom Mappings
 
 let mapleader=","
 let maplocalleader=","
+let autosave=5
 nmap <leader>q :NERDTreeToggle<CR>
 nmap \ <leader>q
 nmap <leader>w :TagbarToggle<CR>
@@ -269,3 +279,16 @@ nmap <silent> <leader><leader> :noh<CR>
 "nmap <Tab> :bnext<CR>
 "nmap <S-Tab> :bprevious<CR>
 
+" move around tabs. conflict with the original screen top/bottom
+" comment them out if you want the original H/L
+" go to prev tab 
+map <S-H> gT
+" go to next tab
+map <S-L> gt
+
+" new tab
+map <C-t><C-t> :tabnew<CR>
+" close tab
+map <C-t><C-w> :tabclose<CR> 
+map <C-t><S-H> :tabmove -<CR>
+map <C-t><S-L> :tabmove +<CR>
