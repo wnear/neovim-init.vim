@@ -54,19 +54,20 @@ Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/neoinclude.vim'
 Plug 'Shougo/deoplete-clangx'
 Plug 'mileszs/ack.vim'
-Plug 'jsfaint/gen_tags.vim'
+"Plug 'jsfaint/gen_tags.vim'
+Plug 'ronakg/quickr-cscope.vim'
 if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 set updatetime=100
 set cursorline
 let g:gitgutter_preview_win_floating=0
-let g:gen_tags#gtags_default_map = 1
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+"let g:gen_tags#gtags_default_map = 1
 nmap <C-n> :cnext<CR>
-
 nmap <C-p> :cprev<CR>
 
+let g:quickr_cscope_program="gtrags-cscope"
+let g:quickr_cscope_db_file="GTAGS"
 " User
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -251,7 +252,9 @@ let autosave=5
 nmap <leader>q :NERDTreeToggle<CR>
 nmap \ <leader>q
 nmap <leader>w :TagbarToggle<CR>
-nmap <leader>e :tabnew ~/.config/nvim/init.vim<CR>
+nmap <leader>ev :tabnew ~/.config/nvim/init.vim<CR>
+nmap <leader>ez :tabnew ~/.zshrc<CR>
+nmap <leader>et :tabnew ~/.tmux.conf<CR>
 "nmap <leader>ee :Colors<CR>
 "nmap <leader>ea :AirlineTheme 
 "nmap <leader>e1 :call ColorDracula()<CR>
@@ -271,6 +274,7 @@ nmap <leader>h :RainbowParentheses!!<CR>
 nmap <leader>j :set filetype=journal<CR>
 "nmap <leader>k :ColorToggle<CR>
 nmap <leader>k :Ack!<CR>
+"nmap <leader>o :e 
 nmap <leader>l :Limelight!!<CR>
 xmap <leader>l :Limelight!!<CR>
 autocmd FileType python nmap <leader>x :0,$!~/.config/nvim/env/bin/python -m yapf<CR>
@@ -279,6 +283,8 @@ nmap <silent> <leader><leader> :noh<CR>
 "nmap <Tab> :bnext<CR>
 "nmap <S-Tab> :bprevious<CR>
 
+let g:quickr_cscope_keymaps = 0
+nmap <C-s> <plug>(quickr_cscope_symbols)
 " move around tabs. conflict with the original screen top/bottom
 " comment them out if you want the original H/L
 " go to prev tab 
