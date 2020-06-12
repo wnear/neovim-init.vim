@@ -59,6 +59,8 @@ Plug 'ronakg/quickr-cscope.vim'
 Plug 'yuttie/comfortable-motion.vim'
 Plug 'wesQ3/vim-windowswap'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
@@ -73,6 +75,8 @@ let g:quickr_cscope_program="gtrags-cscope"
 let g:quickr_cscope_db_file="GTAGS"
 " User
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+let g:polyglot_disabled = ['markdown']
 
 " Entertainment
 "Plug 'ryanss/vim-hackernews'
@@ -131,6 +135,12 @@ tmap <C-w> <Esc><C-w>
 autocmd BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 
+" vim-markdown
+autocmd InsertEnter  *.{markdown,md} set conceallevel=0
+autocmd InsertLeave  *.{markdown,md} set conceallevel=2
+let g:vim_markdown_folding_disabled = 1
+
+"
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 " Change clang binary path
