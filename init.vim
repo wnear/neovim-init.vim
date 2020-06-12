@@ -54,8 +54,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/neoinclude.vim'
 Plug 'Shougo/deoplete-clangx'
 Plug 'mileszs/ack.vim'
-"Plug 'jsfaint/gen_tags.vim'
+Plug 'jsfaint/gen_tags.vim'
 Plug 'ronakg/quickr-cscope.vim'
+Plug 'yuttie/comfortable-motion.vim'
+Plug 'wesQ3/vim-windowswap'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
@@ -251,7 +254,7 @@ let maplocalleader=","
 let autosave=5
 nmap <leader>q :NERDTreeToggle<CR>
 nmap \ <leader>q
-nmap <leader>w :TagbarToggle<CR>
+nmap <leader>t :TagbarToggle<CR>
 nmap <leader>ev :tabnew ~/.config/nvim/init.vim<CR>
 nmap <leader>ez :tabnew ~/.zshrc<CR>
 nmap <leader>et :tabnew ~/.tmux.conf<CR>
@@ -288,9 +291,9 @@ nmap <C-s> <plug>(quickr_cscope_symbols)
 " move around tabs. conflict with the original screen top/bottom
 " comment them out if you want the original H/L
 " go to prev tab 
-map <S-H> gT
+"map <S-H> gT
 " go to next tab
-map <S-L> gt
+"map <S-L> gt
 
 " new tab
 map <C-t><C-t> :tabnew<CR>
