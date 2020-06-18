@@ -50,6 +50,7 @@ Plug 'dkarter/bullets.vim'
 
 " user
 Plug 'jceb/vim-orgmode'
+Plug 'tpope/vim-repeat'
 Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/neoinclude.vim'
 Plug 'Shougo/deoplete-clangx'
@@ -67,9 +68,12 @@ endif
 set updatetime=100
 set cursorline
 let g:gitgutter_preview_win_floating=0
-"let g:gen_tags#gtags_default_map = 1
+let g:gen_tags#gtags_default_map = 1
 nmap <C-n> :cnext<CR>
 nmap <C-p> :cprev<CR>
+
+set cscopetag
+set cscopeprg='gtags-cscope'
 
 let g:quickr_cscope_program="gtrags-cscope"
 let g:quickr_cscope_db_file="GTAGS"
@@ -77,6 +81,18 @@ let g:quickr_cscope_db_file="GTAGS"
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 let g:polyglot_disabled = ['markdown']
+
+set foldmethod=syntax
+set fml=19
+
+" it's unknow to me now, the effective is keep pressing the btn when try to
+" change the window size.
+if bufwinnr(1)
+  map + <C-W>2+
+  map - <C-W>2-
+  map > <C-W>2>
+  map < <C-W>2<
+endif
 
 " Entertainment
 "Plug 'ryanss/vim-hackernews'
@@ -248,38 +264,47 @@ function! ColorZazen()
     IndentLinesEnable
 endfunction
 
-"--------------------------------------------------------------------------- 
-" Tip #382: Search for <cword> and replace with input() in all open buffers 
-"--------------------------------------------------------------------------- 
-fun! Replace() 
-    let s:word = input("Replace " . expand('<cword>') . " with:") 
-    :exe 'bufdo! %s/\<' . expand('<cword>') . '\>/' . s:word . '/ge' 
-    :unlet! s:word 
-endfun 
+" Format with astyle
+function! FormatwithAstyle()
+    exec "w"
+    if &filetype == 'C' || &filetype == 'h'
+        exec "!astyle %"
+    elseif &filetype == 'cpp'
+        exec "!astyle %"
+        return
+    endif
+endfunction
+
+
+"---------------------------------------------------------------------------
+" Tip #382: Search for <cword> and replace with input() in all open buffers
+"---------------------------------------------------------------------------
+fun! Replace()
+    let s:word = input("Replace " . expand('<cword>') . " with:")
+    :exe 'bufdo! %s/\<' . expand('<cword>') . '\>/' . s:word . '/ge'
+    :unlet! s:word
+endfun
 
 """ Custom Mappings
 
 let mapleader=","
 let maplocalleader=","
 let autosave=5
+
+nmap <leader><Space> :call TrimWhitespace()<CR>
+
 nmap <leader>q :NERDTreeToggle<CR>
-nmap \ <leader>q
-nmap <leader>t :TagbarToggle<CR>
+"nmap <leader>w
+nmap <leader>ea :tabnew ~/.astylerc<CR>
 nmap <leader>ev :tabnew ~/.config/nvim/init.vim<CR>
 nmap <leader>ez :tabnew ~/.zshrc<CR>
 nmap <leader>et :tabnew ~/.tmux.conf<CR>
-"nmap <leader>ee :Colors<CR>
-"nmap <leader>ea :AirlineTheme 
-"nmap <leader>e1 :call ColorDracula()<CR>
-"nmap <leader>e2 :call ColorSeoul256()<CR>
-"nmap <leader>e3 :call ColorForgotten()<CR>
-"nmap <leader>e4 :call ColorZazen()<CR>
 nmap <leader>r :so ~/.config/nvim/init.vim<CR>
-nmap <leader><Space> :call TrimWhitespace()<CR>
+nmap <leader>t :TagbarToggle<CR>
+
 xmap <leader>a gaip*
 nmap <leader>a gaip*
 nmap <leader>s <C-w>s<C-w>j:terminal<CR>
-nmap <leader>vs <C-w>v<C-w>l:terminal<CR>
 nmap <leader>d <Plug>(pydocstring)
 nmap <leader>f :Files<CR>
 nmap <leader>g :Goyo<CR>
@@ -287,9 +312,12 @@ nmap <leader>h :RainbowParentheses!!<CR>
 nmap <leader>j :set filetype=journal<CR>
 "nmap <leader>k :ColorToggle<CR>
 nmap <leader>k :Ack!<CR>
-"nmap <leader>o :e 
+"nmap <leader>o :e
 nmap <leader>l :Limelight!!<CR>
 xmap <leader>l :Limelight!!<CR>
+
+" format
+nmap <leader>x :call FormatwithAstyle()<CR>
 autocmd FileType python nmap <leader>x :0,$!~/.config/nvim/env/bin/python -m yapf<CR>
 "nmap <leader>n :HackerNews best<CR>J
 nmap <silent> <leader><leader> :noh<CR>
@@ -300,7 +328,7 @@ let g:quickr_cscope_keymaps = 0
 nmap <C-s> <plug>(quickr_cscope_symbols)
 " move around tabs. conflict with the original screen top/bottom
 " comment them out if you want the original H/L
-" go to prev tab 
+" go to prev tab
 "map <S-H> gT
 " go to next tab
 "map <S-L> gt
@@ -308,6 +336,6 @@ nmap <C-s> <plug>(quickr_cscope_symbols)
 " new tab
 map <C-t><C-t> :tabnew<CR>
 " close tab
-map <C-t><C-w> :tabclose<CR> 
+map <C-t><C-w> :tabclose<CR>
 map <C-t><S-H> :tabmove -<CR>
 map <C-t><S-L> :tabmove +<CR>
