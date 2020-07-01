@@ -85,13 +85,12 @@ let g:polyglot_disabled = ['markdown']
 set foldmethod=syntax
 set fml=19
 
-" it's unknow to me now, the effective is keep pressing the btn when try to
-" change the window size.
+" vmap is used to keep the default of </> to indent.
 if bufwinnr(1)
-  map + <C-W>2+
-  map - <C-W>2-
-  map > <C-W>2>
-  map < <C-W>2<
+  vmap + <C-W>2+
+  vmap - <C-W>2-
+  vmap > <C-W>2>
+  vmap < <C-W>2<
 endif
 
 " Entertainment
